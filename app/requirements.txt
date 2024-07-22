@@ -1,1 +1,6 @@
-flask==3.0.3
+Flask
+Flask-SQLAlchemy
+Flask-Marshmallow
+mariadb
+psycopg2-binary
+python-dotenv

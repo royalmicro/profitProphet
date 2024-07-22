@@ -1,28 +1,27 @@
-import os
-
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
 
+db = SQLAlchemy()
+ma = Marshmallow()
 
-def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+def create_app(config_filename=None):
+    app = Flask(__name__)
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+    # Load configuration
+    app.config.from_object('app.config.Config')
+    if config_filename:
+        app.config.from_pyfile(config_filename)
 
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
+    # Initialize extensions
+    db.init_app(app)
+    ma.init_app(app)
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    # Register blueprints
+    from app.routes.user_route import user_bp
+    from app.routes.base_route import base_bp
+
+    app.register_blueprint(base_bp)
+    app.register_blueprint(user_bp)
 
     return app
