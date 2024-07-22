@@ -1,14 +1,17 @@
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  mariadb:
+    image: mariadb:latest
+    container_name: mariadb
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: changeme
-      MYSQL_DATABASE: profitprophet
+      MYSQL_ROOT_PASSWORD: changeme  # Set the root password
+      MYSQL_DATABASE: profitprophet  # Create a database on startup
+      MYSQL_USER: profitprophet  # Create a user
+      MYSQL_PASSWORD: changeme  # Set the user's password
     ports:
       - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
 
   api:
     build:
@@ -17,13 +20,20 @@ services:
     container_name: api
     ports:
       - "5000:5000"
+      - "5678:5678"
     depends_on:
-      - mysql
+      - mariadb
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: mariadb
       MYSQL_USER: root
       MYSQL_PASSWORD: changeme
-      MYSQL_DB: profitprophet
+      MYSQL_DATABASE: profitprophet
+    volumes:
+      - ./app:/app
 
 volumes:
-  mysql_data:
+  mariadb_data:
+
+networks:
+  my_network:
+    driver: bridge
