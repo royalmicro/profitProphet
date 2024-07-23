@@ -1,0 +1,4 @@
+Single-database configuration for Flask.
+
+# Resources
+Para documentación de comandos visita: [flask-sqlalchemy-migrations](https://www.digitalocean.com/community/tutorials/how-to-perform-flask-sqlalchemy-migrations-using-flask-migrate)

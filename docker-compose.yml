@@ -13,7 +13,7 @@ services:
     volumes:
       - mariadb_data:/var/lib/mysql
 
-  api:
+  flask-api:
     build:
       context: .
       dockerfile: docker/python-api/Dockerfile

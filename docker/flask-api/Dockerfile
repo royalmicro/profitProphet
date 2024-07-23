@@ -60,4 +60,5 @@ RUN chmod +x bin/start.sh
 RUN dos2unix bin/start.sh
 
 # Run the shell script
+
 CMD ["./bin/start.sh"]
