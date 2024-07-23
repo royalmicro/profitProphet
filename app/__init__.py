@@ -1,14 +1,47 @@
+"""
+This module initializes and configures the Flask application with SQLAlchemy, Marshmallow,
+and Flask-Migrate. It also registers the application's blueprints for user and base routes.
+
+Modules imported:
+    - Flask: The core Flask application object.
+    - Migrate: Flask-Migrate extension for SQLAlchemy database migrations.
+    - SQLAlchemy: SQLAlchemy database extension for Flask.
+    - Marshmallow: Marshmallow serialization/deserialization and validation library for Flask.
+    - user_bp: Blueprint for user-related routes from `app.routes.user_route`.
+    - base_bp: Blueprint for base routes from `app.routes.base_route`.
+
+Functions:
+    - create_app(config_filename=None): Initializes the Flask app with the given configuration 
+      file, sets up database migrations, initializes extensions, and registers blueprints.
+
+Usage:
+    To create an instance of the Flask application, call `create_app` with an optional 
+    configuration filename:
+        app = create_app('path/to/config.py')
+"""
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from app.routes.user_route import user_bp
+from app.routes.base_route import base_bp
 
 db = SQLAlchemy()
 ma = Marshmallow()
 
 def create_app(config_filename=None):
+    """
+    Initialize and configure the Flask application.
+
+    Args:
+        config_filename (str, optional): Path to a configuration file. If provided, the 
+                                         configuration will be loaded from this file.
+
+    Returns:
+        Flask: Configured Flask application instance.
+    """
     app = Flask(__name__)
-    migrate = Migrate(app, db)
+    migrate = Migrate(app, db)  # noqa: F841
     # Load configuration
     app.config.from_object('app.config.Config')
     if config_filename:
@@ -17,10 +50,6 @@ def create_app(config_filename=None):
     # Initialize extensions
     db.init_app(app)
     ma.init_app(app)
-
-    # Register blueprints
-    from app.routes.user_route import user_bp
-    from app.routes.base_route import base_bp
 
     app.register_blueprint(base_bp)
     app.register_blueprint(user_bp)

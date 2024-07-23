@@ -11,7 +11,7 @@ def get_users():
 @user_bp.route('/users', methods=['POST'])
 def add_user():
     data = request.get_json()
-    new_user = User(username=data['username'], email=data['email'])
+    new_user = User(username=data['username'], email=data['email']) # type: ignore
     db.session.add(new_user)
     db.session.commit()
     return jsonify({'username': new_user.username}), 201
