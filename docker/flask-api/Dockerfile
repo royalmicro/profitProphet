@@ -57,8 +57,7 @@ EXPOSE 5000
 
 # Make the shell script executable
 RUN chmod +x bin/start.sh
-RUN dos2unix bin/start.sh
 
 # Run the shell script
-
+CMD ["dos2unix","bin/start.sh"]
 CMD ["./bin/start.sh"]
