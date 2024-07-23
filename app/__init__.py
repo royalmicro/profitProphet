@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 
@@ -7,7 +8,7 @@ ma = Marshmallow()
 
 def create_app(config_filename=None):
     app = Flask(__name__)
-
+    migrate = Migrate(app, db)
     # Load configuration
     app.config.from_object('app.config.Config')
     if config_filename:
