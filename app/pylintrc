@@ -443,7 +443,8 @@ disable=raw-checker-failed,
         unused-variable,
         no-member,
         unused-argument,
-        redefined-outer-name
+        redefined-outer-name,
+        mixed-line-endings
 
 
 # Enable the message, report, category or checker with the given id(s). You can

@@ -21,13 +21,17 @@ Usage:
 """
 from flask import Flask
 from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from app.routes.user_route import user_bp
-from app.routes.base_route import base_bp
+from .configuration.extensions import db
+from . import configuration
+from . import domain
+from . import infrastructure
+from .routes.stock_routes import stock_bp
 
-db = SQLAlchemy()
+__all__ = ['configuration', 'domain', 'infrastructure']
+
 ma = Marshmallow()
+
 
 def create_app(config_filename=None):
     """
@@ -43,7 +47,7 @@ def create_app(config_filename=None):
     app = Flask(__name__)
     migrate = Migrate(app, db)  # noqa: F841
     # Load configuration
-    app.config.from_object('app.config.Config')
+    app.config.from_object('app.configuration.config.DevelopmentConfig')
     if config_filename:
         app.config.from_pyfile(config_filename)
 
@@ -51,7 +55,6 @@ def create_app(config_filename=None):
     db.init_app(app)
     ma.init_app(app)
 
-    app.register_blueprint(base_bp)
-    app.register_blueprint(user_bp)
+    app.register_blueprint(stock_bp)
 
     return app
