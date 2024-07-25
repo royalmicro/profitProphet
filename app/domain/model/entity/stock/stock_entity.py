@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from typing import Any, Dict, Optional
 
 from sqlalchemy import JSON, String
@@ -7,6 +8,7 @@ from app.configuration.extensions import db
 from app.domain.model.entity.stock.stock_dto import StockDTO
 
 
+@dataclass
 class StockEntity(db.Model):
     """
     Represents a stock entity in the application's database.
@@ -30,7 +32,7 @@ class StockEntity(db.Model):
 
     def entity_to_dto(self) -> StockDTO:
         return StockDTO(
-            stockId=self.id,
+            id=self.id,
             symbol=self.symbol,
             name=self.name,
             historical_data=self.historical_data or {},

@@ -26,7 +26,7 @@ def add_stock():
 
 @stock_bp.route("/stocks/<int:id>", methods=["DELETE"])
 def delete_stock(stockId):
-    stock = StockEntity().query.get(stockId)  # type: ignore
+    stock = StockEntity().query.get(stockId)
     db.session.delete(stock)
     db.session.commit()
     return HttpResponse(None, 200).to_flask_response()

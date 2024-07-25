@@ -59,5 +59,5 @@ EXPOSE 5000
 RUN chmod +x bin/start.sh
 
 # Run the shell script
-CMD ["dos2unix","bin/start.sh"]
-CMD ["./bin/start.sh"]
+CMD ["find", "./bin", "-type", "f", "-print0", "|", "xargs", "-0", "dos2unix"]
+CMD ["sleep", "infinity"]
