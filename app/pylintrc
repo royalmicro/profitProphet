@@ -436,15 +436,15 @@ disable=raw-checker-failed,
         use-symbolic-message-instead,
         use-implicit-booleaness-not-comparison-to-string,
         use-implicit-booleaness-not-comparison-to-zero,
-        too-few-public-methods,
         missing-module-docstring,
         missing-function-docstring,
         invalid-name,
-        unused-variable,
+        mixed-line-endings,
+        import-error,
+        too-many-instance-attributes,
+        no-name-in-module,
         no-member,
-        unused-argument,
-        redefined-outer-name,
-        mixed-line-endings
+        too-few-public-methods
 
 
 # Enable the message, report, category or checker with the given id(s). You can
