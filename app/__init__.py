@@ -21,40 +21,25 @@ Usage:
 """
 
 from flask import Flask
-from flask_migrate import Migrate
-from flask_marshmallow import Marshmallow
-from app.configuration.extensions import db
 from .routes.stock_routes import stock_bp
 from .routes.data_price_routes import data_price_bp
+from .configuration.config import DevelopmentConfig
+from .configuration import extensions
 
 
-ma = Marshmallow()
 
-
-def create_app(config_filename=None):
-    """
-    Initialize and configure the Flask application.
-
-    Args:
-        config_filename (str, optional): Path to a configuration file. If provided, the
-                                         configuration will be loaded from this file.
+def create_app():
+    """Initialize and configure the Flask application.
 
     Returns:
         Flask: Configured Flask application instance.
     """
     app = Flask(__name__)
-
     # Load configuration
-    app.config.from_object("app.configuration.config.DevelopmentConfig")
-    if config_filename:
-        app.config.from_pyfile(config_filename)
-
-    # Initialize extensions
-    db.init_app(app)
-    ma.init_app(app)
-    Migrate(app, db)
+    app.config.from_object(DevelopmentConfig)
 
     app.register_blueprint(stock_bp)
     app.register_blueprint(data_price_bp)
+    extensions.init(app)
 
     return app

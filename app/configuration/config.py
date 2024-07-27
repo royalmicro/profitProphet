@@ -31,6 +31,7 @@ class DevelopmentConfig(Config):
     """
 
     DEBUG = True
+    TESTING = True
 
 
 class ProductionConfig(Config):
