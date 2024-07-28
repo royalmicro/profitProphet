@@ -56,7 +56,7 @@ RUN pip3.12 install -r requirements.txt
 EXPOSE 5000
 
 # Make the shell script executable
-RUN chmod +x bin/start.sh
+RUN chmod -R +x bin
 
 # Run the shell script
 CMD ["find", "./bin", "-type", "f", "-print0", "|", "xargs", "-0", "dos2unix"]
