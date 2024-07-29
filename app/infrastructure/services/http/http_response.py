@@ -3,9 +3,11 @@ from typing import Dict, List
 
 from flask import Response
 
-from app.domain.model.entity.entity_interface import EntityInterface
+from app.domain.model.entity_interface import EntityInterface
+
 
 HEADERS = {"Content-Type": "application/json"}
+
 
 class HttpResponse:
     """
@@ -28,21 +30,9 @@ class HttpResponse:
         to_flask_response() -> Response: Converts the HttpResponse to a Flask Response object.
     """
 
-    def __init__(
-        self,
-        data: List[EntityInterface] | EntityInterface | None,
-        status: int,
-        headers: Dict[str, str] | None = None,
-    ):
-        self.data = data
-        self.status = status
-        self.headers = (
-            headers if headers is not None else headers
-        )
-
-    def serialize(self) -> str:
+    def serialize(self, data_to_serialize) -> str:
         try:
-            data = self.data
+            data = data_to_serialize
             if isinstance(data, list):
                 data = [entity.entity_to_dto().to_string() for entity in data]
             else:
@@ -52,19 +42,18 @@ class HttpResponse:
         except TypeError as e:
             raise ValueError(f"Data provided cannot be serialized to JSON: {e}") from e
 
-    def __str__(self) -> str:
-        return self.serialize()
-
-    def __repr__(self) -> str:
-        return self.serialize()
-
-    def to_flask_response(self) -> Response:
+    def to_flask_response(
+        self,
+        data: List[EntityInterface] | EntityInterface | None,
+        status: int,
+        headers: Dict[str, str] | None = None,
+    ) -> Response:
         response_body = (
-            self.data if isinstance(self.data, dict) else json.loads(self.serialize())
+            data if isinstance(data, dict) else json.loads(self.serialize(data))
         )
         return Response(
             response=json.dumps(response_body),
-            status=self.status,
-            headers=self.headers,
+            status=status,
+            headers=headers,
             mimetype="application/json",
         )

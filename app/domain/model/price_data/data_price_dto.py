@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Any, Dict
 from app.domain.model.entity.dto_interface import EntityDtoInterface
 
+
 @dataclass()
 class DataPriceDto(EntityDtoInterface):
     """

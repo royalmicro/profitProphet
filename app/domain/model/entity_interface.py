@@ -1,5 +1,6 @@
 from typing import Protocol
-from app.domain.model.entity.dto_interface import EntityDtoInterface
+
+from app.domain.model.dto_interface import EntityDtoInterface
 
 
 class EntityInterface(Protocol):
@@ -11,4 +12,5 @@ class EntityInterface(Protocol):
     entity_to_dto() -> EntityDtoInterface:
         Converts the entity to its corresponding Data Transfer Object (DTO).
     """
+
     def entity_to_dto(self) -> EntityDtoInterface: ...

@@ -1,10 +1,11 @@
 from dataclasses import dataclass
 from typing import Any, Dict
-from app.domain.model.entity.dto_interface import EntityDtoInterface
+
+from app.domain.model.dto_interface import EntityDtoInterface
 
 
 @dataclass()
-class StockDTO(EntityDtoInterface):
+class StockDto(EntityDtoInterface):
     """
     Represents a Data Transfer Object for the stock.
 
@@ -21,8 +22,15 @@ class StockDTO(EntityDtoInterface):
     historical_data: Dict[str, Any]
 
     def to_string(self) -> Dict[str, Any]:
+        if self.id:
+            return {
+                "id": self.id,
+                "symbol": self.symbol,
+                "name": self.name,
+                "historical_data": self.historical_data,
+            }
+
         return {
-            "id": self.id,
             "symbol": self.symbol,
             "name": self.name,
             "historical_data": self.historical_data,

@@ -444,7 +444,8 @@ disable=raw-checker-failed,
         too-many-instance-attributes,
         no-name-in-module,
         no-member,
-        too-few-public-methods
+        too-few-public-methods,
+        import-outside-toplevel
 
 
 # Enable the message, report, category or checker with the given id(s). You can

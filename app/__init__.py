@@ -21,25 +21,20 @@ Usage:
 """
 
 from flask import Flask
+from flask_injector import FlaskInjector
+
+from app.configuration import extensions
+from app.configuration.extensions.services_extension import Services
 from .routes.stock_routes import stock_bp
-from .routes.data_price_routes import data_price_bp
 from .configuration.config import DevelopmentConfig
-from .configuration import extensions
 
 
+app = Flask(__name__)
+# Load configuration
+app.config.from_object(DevelopmentConfig)
 
-def create_app():
-    """Initialize and configure the Flask application.
-
-    Returns:
-        Flask: Configured Flask application instance.
-    """
-    app = Flask(__name__)
-    # Load configuration
-    app.config.from_object(DevelopmentConfig)
-
-    app.register_blueprint(stock_bp)
-    app.register_blueprint(data_price_bp)
-    extensions.init(app)
-
-    return app
+app.register_blueprint(stock_bp)
+# app.register_blueprint(data_price_bp)
+extensions.init(app)
+FlaskInjector(app=app, modules=[Services().include_modules])
+app.run()
