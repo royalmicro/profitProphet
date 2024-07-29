@@ -3,13 +3,11 @@ from typing import Any, Dict, Optional
 
 from sqlalchemy import JSON, String
 from sqlalchemy.orm import Mapped, mapped_column
-
-from app.configuration.extensions import db
-from app.domain.model.entity.stock.stock_dto import StockDTO
+from app.configuration.extensions.db_extension import db
 
 
 @dataclass
-class StockEntity(db.Model):
+class StockMapped(db.Model):
     """
     Represents a stock entity in the application's database.
 
@@ -29,11 +27,3 @@ class StockEntity(db.Model):
     historical_data: Mapped[Optional[Dict[str, Any]]] = mapped_column(
         type_=JSON, nullable=True
     )
-
-    def entity_to_dto(self) -> StockDTO:
-        return StockDTO(
-            id=self.id,
-            symbol=self.symbol,
-            name=self.name,
-            historical_data=self.historical_data or {},
-        )

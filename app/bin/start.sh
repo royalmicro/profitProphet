@@ -20,6 +20,11 @@ run_debug(){
 
 pushd ${SCRIPT_DIR}/../
 # Parse command line arguments
+if [ $# -eq 0 ]; then
+    run_debug
+    exit 0
+fi
+
 while [[ "$#" -gt 0 ]]; do
     case $1 in
         --breakpoints)
@@ -27,7 +32,7 @@ while [[ "$#" -gt 0 ]]; do
             exit 0
             ;;
         *)
-            run_debug
+            echo "No valid arguments"
             exit 0
             ;;
     esac

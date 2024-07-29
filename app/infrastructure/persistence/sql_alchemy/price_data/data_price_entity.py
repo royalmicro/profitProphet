@@ -28,7 +28,9 @@ class DataPriceEntity(db.Model):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     stock_id: Mapped[int] = mapped_column(ForeignKey("stocks.id"))
-    register_date: Mapped[datetime] = mapped_column(DateTime(), nullable=True, unique=True)
+    register_date: Mapped[datetime] = mapped_column(
+        DateTime(), nullable=True, unique=True
+    )
     open_price: Mapped[float] = mapped_column(Float(), nullable=True)
     close_price: Mapped[float] = mapped_column(Float(), nullable=True)
     highest_price: Mapped[float] = mapped_column(Float(), nullable=True)

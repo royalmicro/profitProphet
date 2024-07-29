@@ -10,4 +10,5 @@ class EntityDtoInterface(Protocol):
     to_string() -> Dict[str, Any]:
         Converts the entity to a dictionary representation.
     """
+
     def to_string(self) -> Dict[str, Any]: ...
