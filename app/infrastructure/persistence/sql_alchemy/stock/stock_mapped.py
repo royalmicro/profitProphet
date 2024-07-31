@@ -27,3 +27,23 @@ class StockMapped(db.Model):
     historical_data: Mapped[Optional[Dict[str, Any]]] = mapped_column(
         type_=JSON, nullable=True
     )
+
+    def has_changed(self, attr, new_value):
+        current_value = getattr(self, attr)
+        return current_value != new_value
+
+    def to_str(self) -> Dict[str, any]:
+        response = {}
+
+        if self.id:
+            response.update({"id": self.id})
+
+        response.update(
+            {
+                "name": self.name,
+                "symbol": self.symbol,
+                "historical_data": self.historical_data,
+            }
+        )
+
+        return response

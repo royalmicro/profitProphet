@@ -1,4 +1,5 @@
 from typing import Any, Dict
+
 from app.domain.model.entity_interface import EntityInterface
 from app.domain.model.stock.stock_dto import StockDto
 
@@ -30,17 +31,11 @@ class Stock(EntityInterface):
             Converts the stock entity to a data transfer object (DTO).
     """
 
-    def __init__(
-        self,
-        stockId: int | None,
-        symbol: str,
-        name: str,
-        historical_data: Dict[str, any] | None,
-    ) -> None:
-        self.id = stockId
-        self.symbol = symbol
-        self.name = name
-        self.historical_data = historical_data
+    def __init__(self, **kwargs) -> None:
+        self.id = kwargs.get("id")
+        self.symbol = kwargs.get("symbol")
+        self.name = kwargs.get("name")
+        self.historical_data = kwargs.get("historical_data")
 
     def get_symbol(self):
         return self.symbol
