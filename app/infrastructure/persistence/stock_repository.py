@@ -28,21 +28,39 @@ class StockRepository(StockRepositoryInterface):
     def __init__(self) -> None:
         self.db = db
 
-    def add(self, entity: Stock) -> None:
-        mapped_stock = StockMapped(name=entity.get_name(), symbol=entity.get_symbol())
+    def add(self, **kwargs) -> None:
+        mapped_stock = StockMapped(name=kwargs.get("name"), symbol=kwargs.get("symbol"))
         self.db.session.add(mapped_stock)
         self.db.session.commit()
 
+        return (
+            self.db.session.query(StockMapped).order_by(StockMapped.id.desc()).first()
+        )
+
     def get_all(self) -> None:
-        stocks_mapped = StockMapped.query.all()
-        stocks: List[StockMapped] = []
+        stocks_mapped: List[StockMapped] = StockMapped.query.all()
+        stocks: List[Stock] = []
         for stock in stocks_mapped:
-            stocks.append(
-                Stock(
-                    stockId=stock.id,
-                    name=stock.name,
-                    symbol=stock.symbol,
-                    historical_data=stock.historical_data,
-                )
-            )
+            stocks.append(Stock(**stock.to_str()))
         return stocks
+
+    def get_by_symbol(self, symbol) -> StockMapped:
+        stock_mapped: StockMapped = StockMapped.query.filter(
+            (StockMapped.symbol == symbol)
+        ).first()
+        return stock_mapped
+
+    def update(self, stock: Stock):
+        stock_mapped = self.get_by_symbol(stock.symbol)
+
+        if stock_mapped.has_changed("name", stock.name):
+            stock_mapped.name = stock.name
+
+        stock_mapped.historical_data = stock.historical_data
+
+        self.db.session.commit()
+
+    def delete(self, symbol: str):
+        stock = self.get_by_symbol(symbol)
+        self.db.session.delete(stock)
+        db.session.commit()

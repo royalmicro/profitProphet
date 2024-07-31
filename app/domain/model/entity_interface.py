@@ -1,4 +1,4 @@
-from typing import Protocol
+from typing import Any, Protocol
 
 from app.domain.model.dto_interface import EntityDtoInterface
 
@@ -14,3 +14,5 @@ class EntityInterface(Protocol):
     """
 
     def entity_to_dto(self) -> EntityDtoInterface: ...
+
+    def has_changed(self, mapped_file: Any, attr: str) -> bool: ...
