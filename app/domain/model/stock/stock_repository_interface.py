@@ -1,7 +1,7 @@
-from typing import Protocol
+from app.domain.model.repository_interface import RepositoryInterface
 
 
-class StockRepositoryInterface(Protocol):
+class StockRepositoryInterface(RepositoryInterface):
     """
     Interface for converting an entity to its corresponding DTO (Data Transfer Object).
 
