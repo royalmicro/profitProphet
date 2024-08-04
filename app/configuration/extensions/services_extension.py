@@ -1,6 +1,7 @@
 from injector import Binder, singleton
 
 from app.infrastructure.persistence.stock_repository import StockRepository
+from app.infrastructure.persistence.user_repository import UserRepository
 from app.infrastructure.services.http.http_response import HttpResponse
 
 
@@ -30,4 +31,5 @@ class Services:
 
     def include_modules(self, binder: Binder):
         binder.bind(StockRepository, to=StockRepository, scope=singleton)
+        binder.bind(UserRepository, to=UserRepository, scope=singleton)
         binder.bind(HttpResponse, to=HttpResponse, scope=singleton)
