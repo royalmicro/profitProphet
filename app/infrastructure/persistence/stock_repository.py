@@ -27,6 +27,7 @@ class StockRepository(StockRepositoryInterface):
 
     def __init__(self) -> None:
         self.db = db
+        super().__init__(self)
 
     def add(self, **kwargs) -> None:
         mapped_stock = StockMapped(name=kwargs.get("name"), symbol=kwargs.get("symbol"))
@@ -50,17 +51,17 @@ class StockRepository(StockRepositoryInterface):
         ).first()
         return stock_mapped
 
-    def update(self, stock: Stock):
-        stock_mapped = self.get_by_symbol(stock.symbol)
+    def update(self, entity: Stock):
+        stock_mapped = self.get_by_symbol(entity.symbol)
 
-        if stock_mapped.has_changed("name", stock.name):
-            stock_mapped.name = stock.name
+        if stock_mapped.has_changed("name", entity.name):
+            stock_mapped.name = entity.name
 
-        stock_mapped.historical_data = stock.historical_data
+        stock_mapped.historical_data = entity.historical_data
 
         self.db.session.commit()
 
-    def delete(self, symbol: str):
+    def delete_by_symbol(self, symbol: str):
         stock = self.get_by_symbol(symbol)
         self.db.session.delete(stock)
         db.session.commit()
