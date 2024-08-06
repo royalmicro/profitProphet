@@ -19,6 +19,8 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "default_secret_key")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
+    ALPHA_VANTAGE_API_KEY = os.getenv("ALPHA_VANTAGE_API_KEY", "default_api_key")
+    ROOT_PATH = "/app"
 
 
 class DevelopmentConfig(Config):

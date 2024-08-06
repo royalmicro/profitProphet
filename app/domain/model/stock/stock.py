@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from app.domain.model.entity_interface import EntityInterface
+from app.domain.utils.entity_interface import EntityInterface
 from app.domain.model.stock.stock_dto import StockDto
 
 

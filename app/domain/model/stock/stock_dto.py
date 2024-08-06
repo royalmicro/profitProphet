@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict
 
-from app.domain.model.dto_interface import EntityDtoInterface
+from app.domain.utils.dto_interface import EntityDtoInterface
 
 
 @dataclass()

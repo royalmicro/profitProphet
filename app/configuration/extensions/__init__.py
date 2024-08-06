@@ -5,10 +5,12 @@ from app.configuration.extensions.db_extension import db
 from app.configuration.extensions.migration_extension import Migration
 from app.configuration.extensions.api_extension import api
 from app.configuration.extensions.jwt_extension import jwt_manager
+from app.configuration.extensions.services_extension import Services
 
 # Initialize extensions
 migration = Migration()
 marshmallow = Marshmallow()
+services = Services()
 
 
 def init(app: Flask):
@@ -17,6 +19,7 @@ def init(app: Flask):
     migration.init_migration(app, db)
     marshmallow.init_app(app)
     jwt_manager.init_app(app)
+    services.init_app(app)
 
     from app.configuration.api.namespaces import profitProphet_ns
     from app.configuration.api.namespaces import auth_ns

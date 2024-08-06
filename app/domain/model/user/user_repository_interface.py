@@ -1,5 +1,5 @@
-from app.domain.model.entity_interface import EntityInterface
-from app.domain.model.repository_interface import RepositoryInterface
+from app.domain.utils.entity_interface import EntityInterface
+from app.domain.utils.repository_interface import RepositoryInterface
 from app.domain.model.user.user import User
 
 
