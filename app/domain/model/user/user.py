@@ -1,4 +1,4 @@
-from app.domain.model.entity_interface import EntityInterface
+from app.domain.utils.entity_interface import EntityInterface
 
 
 class User(EntityInterface):

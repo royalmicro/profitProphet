@@ -2,7 +2,7 @@ from typing import List
 from flask import Blueprint, request
 from injector import inject
 
-from app.domain.model.entity_interface import EntityInterface
+from app.domain.utils.entity_interface import EntityInterface
 from app.domain.model.stock.stock import Stock
 
 from app.infrastructure.persistence.stock_repository import StockRepository

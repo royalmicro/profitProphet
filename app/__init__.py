@@ -26,7 +26,7 @@ from flask import Flask
 from flask_injector import FlaskInjector
 
 from app.configuration import extensions
-from app.configuration.extensions.services_extension import Services
+from app.configuration.extensions import services
 from .configuration.config import DevelopmentConfig
 
 
@@ -53,7 +53,7 @@ app.config.from_object(DevelopmentConfig)
 extensions.init(app)
 import_controllers()
 
-FlaskInjector(app=app, modules=[Services().include_modules])
+FlaskInjector(app=app, modules=[services.include_modules])
 
 
 if __name__ == "__main__":

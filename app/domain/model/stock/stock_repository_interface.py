@@ -1,4 +1,4 @@
-from app.domain.model.repository_interface import RepositoryInterface
+from app.domain.utils.repository_interface import RepositoryInterface
 
 
 class StockRepositoryInterface(RepositoryInterface):

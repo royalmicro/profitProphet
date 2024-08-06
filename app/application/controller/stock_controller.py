@@ -2,6 +2,7 @@ from flask_jwt_extended import jwt_required
 from flask_restx import Resource, abort, reqparse
 from injector import inject
 
+from app.application.services.alpha_vantage.query import Query
 from app.domain.model.stock.stock import Stock
 from app.infrastructure.persistence.stock_repository import StockRepository
 from app.configuration.api.namespaces import profitProphet_ns
@@ -14,6 +15,23 @@ parser.add_argument("name", type=str)
 
 
 @profitProphet_ns.doc(security="Bearer")
+@profitProphet_ns.param("symbol", "The symbol identifier")
+@profitProphet_ns.route("/stocks/<string:symbol>/overview")
+class StockItemOverview(Resource):
+    """Shows a stock overview"""
+
+    @inject
+    def __init__(self, stock_repo: StockRepository, query: Query, *args, **kwargs):
+        self.stock_repository = stock_repo
+        self.query = query
+        super().__init__(*args, **kwargs)
+
+    def get(self, symbol: str):
+        res = self.query.execute(symbol=symbol, function="OVERVIEW")
+        return res
+
+
+@profitProphet_ns.doc(security="Bearer")
 @profitProphet_ns.route("/stocks/<string:symbol>")
 @profitProphet_ns.response(404, "Stock not found")
 @profitProphet_ns.param("symbol", "The symbol identifier")
@@ -23,8 +41,9 @@ class StockItemsController(Resource):
     method_decorators = [jwt_required()]
 
     @inject
-    def __init__(self, stock_repo: StockRepository, *args, **kwargs):
+    def __init__(self, stock_repo: StockRepository, query: Query, *args, **kwargs):
         self.stock_repository = stock_repo
+        self.query = query
         super().__init__(*args, **kwargs)
 
     @profitProphet_ns.marshal_with(stock_model)
