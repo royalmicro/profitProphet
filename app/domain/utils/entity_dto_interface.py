@@ -1,4 +1,4 @@
-from typing import Any, Dict, Protocol
+from typing import Any, Dict, Protocol, Self
 
 
 class EntityDtoInterface(Protocol):
@@ -11,4 +11,6 @@ class EntityDtoInterface(Protocol):
         Converts the entity to a dictionary representation.
     """
 
-    def to_string(self) -> Dict[str, Any]: ...
+    def to_dict(self) -> Dict[str, Any]: ...
+
+    def from_dict(self, data) -> Self: ...

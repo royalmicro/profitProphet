@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, Dict
 
-from app.domain.utils.dto_interface import EntityDtoInterface
+from app.domain.utils.entity_dto_interface import EntityDtoInterface
 
 
 @dataclass()
@@ -21,7 +21,7 @@ class StockDto(EntityDtoInterface):
     name: str
     historical_data: Dict[str, Any]
 
-    def to_string(self) -> Dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
         if self.id:
             return {
                 "id": self.id,
