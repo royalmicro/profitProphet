@@ -1,6 +1,6 @@
 from typing import Any, Protocol
 
-from app.domain.utils.dto_interface import EntityDtoInterface
+from app.domain.utils.entity_dto_interface import EntityDtoInterface
 
 
 class EntityInterface(Protocol):

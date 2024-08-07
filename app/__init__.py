@@ -20,40 +20,21 @@ Usage:
         app = create_app('path/to/config.py')
 """
 
-import importlib
-import os
 from flask import Flask
 from flask_injector import FlaskInjector
 
 from app.configuration import extensions
-from app.configuration.extensions import services
+from app.configuration.services.services import Services
 from .configuration.config import DevelopmentConfig
-
-
-def import_controllers():
-    # Path to the controllers directory
-    controllers_path = os.path.join(
-        os.path.dirname(__file__), "application", "controller"
-    )
-
-    # Get a list of all files in the controllers directory
-    for file in os.listdir(controllers_path):
-        if file.endswith(".py") and file != "__init__.py":
-            # Module name is the file name without the .py extension
-            module_name = file[:-3]
-            # Full module name includes the package path
-            full_module_name = f"app.application.controller.{module_name}"
-            # Import the module dynamically
-            importlib.import_module(full_module_name)
 
 
 app = Flask(__name__)
 # Load configuration
 app.config.from_object(DevelopmentConfig)
 extensions.init(app)
-import_controllers()
 
-FlaskInjector(app=app, modules=[services.include_modules])
+services = Services(app)
+FlaskInjector(app=app, modules=[services.inject_services])
 
 
 if __name__ == "__main__":

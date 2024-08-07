@@ -1,6 +1,14 @@
 from flask_restx import fields
 from app.configuration.extensions.api_extension import api
 
+metrics_request_model = api.model(
+    "Metrics",
+    {
+        "tickers": fields.List(fields.String),
+        "metrics": fields.List(fields.String),
+    },
+)
+
 stock_model = api.model(
     "Stock",
     {

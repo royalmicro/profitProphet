@@ -36,7 +36,7 @@ class StockItemOverview(Resource):
 @profitProphet_ns.response(404, "Stock not found")
 @profitProphet_ns.param("symbol", "The symbol identifier")
 class StockItemsController(Resource):
-    """Shows a list of all stocks, and lets you POST to add new stocks"""
+    """Shows a list of all stocks, and lets you PUT to update new stocks"""
 
     method_decorators = [jwt_required()]
 
@@ -59,13 +59,6 @@ class StockItemsController(Resource):
             for column in mapped_stock.__table__.columns
         }
         return Stock(**attr_values)
-
-    @profitProphet_ns.expect(stock_model)
-    def put(self, **kwargs):
-        """Update a stock"""
-        args = parser.parse_args()
-
-        self.stock_repository.update(Stock(**kwargs, **args))
 
     @profitProphet_ns.response(204, "Stock deleted")
     def delete(self, **kwargs):
@@ -91,11 +84,3 @@ class StockCollectionController(Resource):
     def get(self):
         """List all stocks"""
         return self.stock_repository.get_all()
-
-    @profitProphet_ns.doc("create_stock")
-    @profitProphet_ns.expect(stock_model)
-    @profitProphet_ns.marshal_with(stock_model, code=201)
-    def post(self):
-        """Create a new stock"""
-        stock_data = profitProphet_ns.payload
-        return (self.stock_repository.add(**stock_data), 201)
