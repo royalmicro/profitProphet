@@ -39,7 +39,7 @@ class MetricsController(Resource):
         # Parse query parameters
         query_params = request.args.to_dict()
         tickers = query_params.get("tickers").split(",")
-        metrics = query_params.get("metrics").split(".")
+        metrics = query_params.get("metrics").split(",")
 
         result = self.get_metrics.execute(tickers, metrics)
 
