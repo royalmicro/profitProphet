@@ -28,5 +28,5 @@ class Roe:
 
         last_net_income = income_statement.annualReports[0].netIncome
         last_shareholder_equity = balance_sheet.annualReports[0].totalShareholderEquity
-
-        return int(last_net_income) / int(last_shareholder_equity)
+        roe = (int(last_net_income) / int(last_shareholder_equity)) * 100
+        return int(roe)
