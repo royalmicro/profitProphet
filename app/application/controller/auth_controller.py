@@ -4,7 +4,6 @@ from injector import inject
 from werkzeug.security import check_password_hash
 from app.configuration.api.namespaces import auth_ns
 from app.configuration.api.models import user_model, auth_model
-from app.domain.model.user.user import User
 from app.infrastructure.persistence.user_repository import UserRepository
 
 
@@ -26,8 +25,7 @@ class RgisterController(Resource):
     @auth_ns.marshal_with(user_model, code=201)
     def post(self):
         user_data = auth_ns.payload
-        user = User(**user_data)
-        return (self.user_repository.add_entity(user), 201)
+        return (self.user_repository.add(**user_data), 201)
 
 
 @auth_ns.route("/login")
