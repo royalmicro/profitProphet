@@ -1,7 +1,7 @@
 from app.domain.utils.repository_interface import RepositoryInterface
 
 
-class StockRepositoryInterface(RepositoryInterface):
+class CompanyRepositoryInterface(RepositoryInterface):
     """
     Interface for converting an entity to its corresponding DTO (Data Transfer Object).
 

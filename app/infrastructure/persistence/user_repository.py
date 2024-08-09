@@ -1,6 +1,7 @@
 from werkzeug.security import generate_password_hash
 from app.domain.model.user.user_repository_interface import UserRepositoryInterface
 from app.domain.model.user.user import User
+from app.domain.utils.entity_interface import EntityInterface
 from app.infrastructure.persistence.sql_alchemy.user.user_mapped import UserMapped
 from app.configuration.extensions.db_extension import db
 
@@ -17,10 +18,10 @@ class UserRepository(UserRepositoryInterface):
         self.db = db
         super().__init__()
 
-    def add_entity(self, user: User) -> User | None:
+    def add(self, **kwargs) -> EntityInterface:
         user: UserMapped = UserMapped(
-            username=user.get_username(),
-            password_hash=generate_password_hash(user.get_password()),
+            username=kwargs.get("username"),
+            password_hash=generate_password_hash(kwargs.get("password")),
         )
         self.db.session.add(user)
         self.db.session.commit()
@@ -32,7 +33,9 @@ class UserRepository(UserRepositoryInterface):
         if last_updated is None:
             return None
 
-        return User(**last_updated)
+        return User(
+            username=last_updated.username, password_hash=last_updated.password_hash
+        )
 
     def get_by_username(self, username: str) -> User:
         user: UserMapped = UserMapped.query.filter_by(username=username).first()
