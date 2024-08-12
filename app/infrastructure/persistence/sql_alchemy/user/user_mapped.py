@@ -25,7 +25,7 @@ class UserMapped(db.Model):
     username = db.Column(db.String(50), unique=True)
     password_hash = db.Column(db.String(1024))
 
-    def get_model_attributes(self):
+    def to_dict(self):
         mapper = inspect(self)
         attributes = {}
         for column in mapper.attrs:

@@ -30,9 +30,8 @@ class MetricsController(Resource):
     @profitProphet_ns.doc(
         params={
             "tickers": "Symbol for the query",
-            "start_date": "Start date for the query (format: YYYY-MM-DD)",
-            "end_date": "End date for the query (format: YYYY-MM-DD)",
-            "metrics": "Limit of results (1 to 100)",
+            "metrics": "A list of available metrics, this is: [ROE,DIVIDEND_YIELD,EPS,D/E]",
+            "year": "Year to match",
         }
     )
     def get(self):
@@ -40,7 +39,8 @@ class MetricsController(Resource):
         query_params = request.args.to_dict()
         tickers = query_params.get("tickers").split(",")
         metrics = query_params.get("metrics").split(",")
+        year = query_params["year"]
 
-        result = self.get_metrics.execute(tickers, metrics)
+        result = self.get_metrics.execute(tickers, metrics, year)
 
         return (result, 200)

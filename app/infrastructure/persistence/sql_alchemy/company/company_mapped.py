@@ -1,6 +1,7 @@
 from dataclasses import dataclass
-from typing import Dict, Optional, Any
-from sqlalchemy import String, Text, Integer, Float, BigInteger
+from typing import Any, Dict, Optional
+
+from sqlalchemy import BigInteger, Float, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.configuration.extensions.db_extension import db

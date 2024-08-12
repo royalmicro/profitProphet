@@ -10,6 +10,7 @@ class User(EntityInterface):
     """
 
     def __init__(self, **kwargs) -> None:
+        self.__id = kwargs.get("id")
         self.__username = kwargs.get("username")
         self.__password_hash = kwargs.get("password_hash")
 
@@ -18,3 +19,6 @@ class User(EntityInterface):
 
     def get_password_hash(self) -> str:
         return self.__password_hash
+
+    def get_id(self) -> int:
+        return self.__id

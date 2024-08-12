@@ -11,3 +11,4 @@ class Metrics:
     DIVIDEND_YIELD = "DIVIDEND_YIELD"
     ROE = "ROE"
     EPS = "EPS"
+    DE = "D/E"
