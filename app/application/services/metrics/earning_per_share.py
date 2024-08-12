@@ -1,14 +1,11 @@
 from injector import inject
 from app.application.services.alpha_vantage.functions import Functions
 from app.application.services.alpha_vantage.query import Query
-from app.application.services.metrics.application_service_interface import (
-    ApplicationServiceInterface,
-)
 from app.domain.model.company.company_dto import CompanyDto
 from app.infrastructure.persistence.company_repository import CompanyRepository
 
 
-class EarningPerShare(ApplicationServiceInterface):
+class EarningPerShare:
     """
     A service class that provides the Earnings Per Share (EPS) for a given company's symbol.
     It interacts with the company repository and external API queries to fetch or compute the EPS value.

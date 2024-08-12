@@ -1,18 +1,16 @@
 from injector import inject
+
 from app.application.services.alpha_vantage.functions import Functions
 from app.application.services.alpha_vantage.query import Query
-from app.application.services.metrics.application_service_interface import (
-    ApplicationServiceInterface,
-)
 from app.domain.model.company.company_dto import CompanyDto
 from app.infrastructure.persistence.company_repository import CompanyRepository
 
 
-class DividendYield(ApplicationServiceInterface):
+class DividendYield:
     """
     Service class responsible for calculating the dividend yield of a company.
 
-    The `DividendYield` class implements the `ApplicationServiceInterface` and is designed
+    The `DividendYield` class is designed
     to query financial data for a given company symbol using the Alpha Vantage API,
     then extract and compute the dividend yield.
 
